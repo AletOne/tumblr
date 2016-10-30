@@ -137,6 +137,10 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         profileView.setImageWith(NSURL(string:"https://api.tumblr.com/v2/blog/humansofnewyork.tumblr.com/avatar")! as URL)
         headerView.addSubview(profileView)
         
+        let label = UILabel(frame: CGRect(x: 50, y: 15, width: 240, height: 25))
+        label.text = "Humans of New York"
+        headerView.addSubview(label)
+        
         return headerView
     }
     

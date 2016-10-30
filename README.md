@@ -2,7 +2,7 @@
 
 **Tumblr** is an app using the [Tumblr API](https://www.tumblr.com/docs/en/api/v2).
 
-Time spent: **10** hours spent in total
+Time spent: **11** hours spent in total
 
 ## User Stories
 
@@ -16,7 +16,7 @@ The following **optional** features are implemented:
 
 - [x] Add a section header view ~~for each post~~ 
 - [x] Implement infinite scrolling
-- [ ] Add a zoomable photo view modal
+- [x] Add a zoomable photo view modal
 
 The following **additional** features are implemented:
 
@@ -37,7 +37,11 @@ GIF created with [LiceCap](http://www.cockos.com/licecap/).
 
 ## Notes
 
-<!-- Describe any challenges encountered while building the app. -->
+My infinite scrolling fires when you reach/drag past the last post rather than a page view before.
+
+Challenges:
+
+- I wasn't able to get the section headers to show up for each post
 
 ## License
 

@@ -12,6 +12,7 @@
 		DC4761371DC1ACCA0044559D /* PostTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4761361DC1ACCA0044559D /* PostTableViewCell.swift */; };
 		DC4981CF1DC56C20006515A2 /* PostDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4981CE1DC56C20006515A2 /* PostDetailViewController.swift */; };
 		DC4981D11DC5B566006515A2 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4981D01DC5B566006515A2 /* InfiniteScrollActivityView.swift */; };
+		DC4981D31DC5BE95006515A2 /* FullScreenPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC4981D21DC5BE95006515A2 /* FullScreenPhotoViewController.swift */; };
 		DCED31321DBF118F00E54219 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DCED31311DBF118F00E54219 /* AppDelegate.swift */; };
 		DCED31371DBF118F00E54219 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DCED31351DBF118F00E54219 /* Main.storyboard */; };
 		DCED31391DBF118F00E54219 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DCED31381DBF118F00E54219 /* Assets.xcassets */; };
@@ -25,6 +26,7 @@
 		DC4761361DC1ACCA0044559D /* PostTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostTableViewCell.swift; sourceTree = "<group>"; };
 		DC4981CE1DC56C20006515A2 /* PostDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostDetailViewController.swift; sourceTree = "<group>"; };
 		DC4981D01DC5B566006515A2 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		DC4981D21DC5BE95006515A2 /* FullScreenPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FullScreenPhotoViewController.swift; sourceTree = "<group>"; };
 		DCED312E1DBF118E00E54219 /* Tumblr.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tumblr.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DCED31311DBF118F00E54219 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		DCED31361DBF118F00E54219 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				DC4761361DC1ACCA0044559D /* PostTableViewCell.swift */,
 				DC4981CE1DC56C20006515A2 /* PostDetailViewController.swift */,
 				DC4981D01DC5B566006515A2 /* InfiniteScrollActivityView.swift */,
+				DC4981D21DC5BE95006515A2 /* FullScreenPhotoViewController.swift */,
 			);
 			path = Tumblr;
 			sourceTree = "<group>";
@@ -224,6 +227,7 @@
 				DCED31321DBF118F00E54219 /* AppDelegate.swift in Sources */,
 				DC4981CF1DC56C20006515A2 /* PostDetailViewController.swift in Sources */,
 				DC4761351DC076B30044559D /* PhotosViewController.swift in Sources */,
+				DC4981D31DC5BE95006515A2 /* FullScreenPhotoViewController.swift in Sources */,
 				DC4761371DC1ACCA0044559D /* PostTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
