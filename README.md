@@ -2,7 +2,7 @@
 
 **Tumblr** is an app using the [Tumblr API](https://www.tumblr.com/docs/en/api/v2).
 
-Time spent: **7** hours spent in total
+Time spent: **10** hours spent in total
 
 ## User Stories
 
@@ -15,7 +15,7 @@ The following **required** functionality is completed:
 The following **optional** features are implemented:
 
 - [x] Add a section header view ~~for each post~~ 
-- [ ] Implement infinite scrolling
+- [x] Implement infinite scrolling
 - [ ] Add a zoomable photo view modal
 
 The following **additional** features are implemented:

@@ -9,13 +9,16 @@
 import UIKit
 import AFNetworking
 
-class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UIScrollViewDelegate {
 
     @IBOutlet weak var tableView: UITableView!
     
     let apiKey = "Q6vHoaVm5L1u2ZAW1fqv3Jw48gFzYVg9P0vH0VHl3GVy6quoGV"
     let endpoint: String = "humansofnewyork.tumblr.com"
-    var data: NSArray = []
+    var data: [NSDictionary] = []
+    var loading = false
+    var loadingView:InfiniteScrollActivityView?
+    var stopIndex = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,15 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         refreshControl.addTarget(self, action: #selector(self.refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh!")
         tableView.insertSubview(refreshControl, at: 0)
+        
+        let frame = CGRect(origin: CGPoint(x: 0,y: tableView.contentSize.height), size: CGSize(width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight))
+        loadingView = InfiniteScrollActivityView(frame: frame)
+        loadingView!.isHidden = true
+        tableView.addSubview(loadingView!)
+        
+        var insets = tableView.contentInset
+        insets.bottom += InfiniteScrollActivityView.defaultHeight
+        tableView.contentInset = insets
         
         getPosts(endpoint: self.endpoint)
     }
@@ -51,7 +63,9 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func successCallback(responseDictionary: NSDictionary) {
-        self.data = (responseDictionary.value(forKey: "response") as? NSDictionary)?.value(forKey: "posts") as! NSArray
+        let posts = (responseDictionary.value(forKey: "response") as? NSDictionary)?.value(forKey: "posts") as! NSArray
+        self.data += (posts as? [NSDictionary])!
+        self.stopIndex += self.data.count
         tableView.reloadData()
     }
     
@@ -78,8 +92,8 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "PostCell", for: indexPath) as! PostTableViewCell
         
-        let post = data[indexPath.row] as? NSDictionary
-        let photos = (post?.value(forKey: "photos") as? NSArray)?[0] as? NSDictionary
+        let post = data[indexPath.row]
+        let photos = (post.value(forKey: "photos") as? NSArray)?[0] as? NSDictionary
         let photo = photos?.value(forKey: "original_size") as? NSDictionary
         let imageUrl = NSURL(string: photo?["url"] as! String) as! URL
         
@@ -96,7 +110,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         let vc = segue.destination as! PostDetailViewController
         var indexPath = tableView.indexPath(for: sender as! UITableViewCell)
         
-        let post = data[(indexPath?.row)!] as? NSDictionary
+        let post = data[(indexPath?.row)!]
         
         
         vc.post = post
@@ -124,5 +138,40 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         headerView.addSubview(profileView)
         
         return headerView
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if (!loading) {
+            let scrollHeight = scrollView.contentOffset.y + tableView.bounds.size.height //- scrollView.contentInset.bottom
+            if (scrollHeight > tableView.contentSize.height && tableView.isDragging) {
+                loading = true
+                let frame = CGRect(origin: CGPoint(x: 0,y: tableView.contentSize.height), size: CGSize(width: tableView.bounds.size.width, height: InfiniteScrollActivityView.defaultHeight))
+                loadingView?.frame = frame
+                loadingView!.startAnimating()
+                getMorePosts(endpoint: self.endpoint)
+            }
+        }
+    }
+    
+    func getMorePosts(endpoint: String) {
+        let url = URL(string: "https://api.tumblr.com/v2/blog/\(endpoint)/posts/photo?api_key=\(self.apiKey)&offset=\(stopIndex)")
+        let request = URLRequest(url: url!)
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate: nil,
+            delegateQueue: OperationQueue.main
+        )
+        
+        let task : URLSessionDataTask = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
+            if let data = dataOrNil {
+                if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                    self.loading = false
+                    self.loadingView!.stopAnimating()
+                    self.successCallback(responseDictionary: responseDictionary)
+                }
+            }
+            
+        })
+        task.resume()
     }
 }
