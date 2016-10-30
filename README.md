@@ -14,7 +14,7 @@ The following **required** functionality is completed:
 
 The following **optional** features are implemented:
 
-- [ ] Add a section header view for each post
+- [x] Add a section header view ~~for each post~~ 
 - [ ] Implement infinite scrolling
 - [ ] Add a zoomable photo view modal
 
