@@ -66,4 +66,17 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
        return data.count
     }
 
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let vc = segue.destination as! PostDetailViewController
+        var indexPath = tableView.indexPath(for: sender as! UITableViewCell)
+        
+        let post = data[(indexPath?.row)!] as? NSDictionary
+        
+        
+        vc.post = post
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 }
