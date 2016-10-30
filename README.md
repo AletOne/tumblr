@@ -2,15 +2,15 @@
 
 **Tumblr** is an app using the [Tumblr API](https://www.tumblr.com/docs/en/api/v2).
 
-Time spent: **5** hours spent in total
+Time spent: **7** hours spent in total
 
 ## User Stories
 
 The following **required** functionality is completed:
 
 - [x] User can view a list of posts from Humans of New York blog. Posts load asynchronously
-- [ ] User can view post details by tapping on a cell
-- [ ] User can pull to refresh the main feed
+- [x] User can view post details by tapping on a cell
+- [x] User can pull to refresh the main feed
 
 The following **optional** features are implemented:
 

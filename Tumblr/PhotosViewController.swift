@@ -21,6 +21,12 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(self.refreshControlAction(refreshControl:)), for: UIControlEvents.valueChanged)
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh!")
+        tableView.insertSubview(refreshControl, at: 0)
+        
         getPosts(endpoint: self.endpoint)
     }
     
@@ -47,6 +53,26 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     func successCallback(responseDictionary: NSDictionary) {
         self.data = (responseDictionary.value(forKey: "response") as? NSDictionary)?.value(forKey: "posts") as! NSArray
         tableView.reloadData()
+    }
+    
+    func refreshControlAction(refreshControl: UIRefreshControl) {
+        let url = URL(string: "https://api.tumblr.com/v2/blog/\(endpoint)/posts/photo?api_key=\(self.apiKey)")
+        let request = URLRequest(url: url!)
+        let session = URLSession(
+            configuration: URLSessionConfiguration.default,
+            delegate: nil,
+            delegateQueue: OperationQueue.main
+        )
+        
+        let task : URLSessionDataTask = session.dataTask(with: request, completionHandler: { (dataOrNil, response, error) in
+            if let data = dataOrNil {
+                if let responseDictionary = try! JSONSerialization.jsonObject(with: data, options: []) as? NSDictionary {
+                    self.successCallback(responseDictionary: responseDictionary)
+                }
+            }
+            refreshControl.endRefreshing()
+        })
+        task.resume()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
